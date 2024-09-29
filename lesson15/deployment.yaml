@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ovveride-args
+spec:
+  selector:
+    matchLabels:
+      app: server-py
+  template:
+    metadata:
+      labels:
+        app: server-py
+    spec:
+      containers:
+      - name: python
+        image: bakavets/kuber:v1.0-args
+        imagePullPolicy: IfNotPresent
+          #args: ["3","2","newTest"]
+        command: ["python3", "-u", "server-default.py"]
+        args: ["GPU"]
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuber-app-with-args
+spec:
+  selector:
+    app: server-py
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30001
+  type: NodePort
+  
+        
+

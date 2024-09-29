@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kuber-ingress-manual
+  labels:
+    name: ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: test.ru
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kuber-service-manual
+            port: 
+              number: 80

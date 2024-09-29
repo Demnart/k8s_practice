@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-examle
+  labels:
+    app: kuber
+spec: 
+  selector:
+    matchLabels:
+      app: kuber
+  template:
+    metadata:
+      labels:
+        app: kuber
+    spec:
+      containers:
+      - name: kuber-app
+        image: bokovets/kuber
+        imagePullPolicy: IfNotPresent
+        ports: 
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        
